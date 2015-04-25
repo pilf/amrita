@@ -1,7 +1,6 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule Integration.CheckerFacts do
-  alias Amrita.Message, as: Message
   use Amrita.Sweet
   import Support
 
