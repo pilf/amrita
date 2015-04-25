@@ -3,10 +3,15 @@ defmodule Amrita.FactError do
                actual: nil,
                predicate: "",
                negation: false,
-               prelude: "Expected"
+               prelude: "Expected",
+               custom_message: nil
 
   def message do
     "fact failed"
+  end
+
+  def message(%{ custom_message: msg }) when not is_nil(msg) do
+    msg
   end
 
   def message(exception) do

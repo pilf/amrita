@@ -1,6 +1,7 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule Integration.CheckerFacts do
+  alias Amrita.Message, as: Message
   use Amrita.Sweet
   import Support
 
@@ -33,6 +34,31 @@ defmodule Integration.CheckerFacts do
        100 |> valid 101
        100 |> ! valid 100
      end
+    end
+  end
+
+  facts "readable failure messages", m do
+    defchecker a_thousand(actual) do
+      rem(actual, 1000) |> equals 0
+    end
+
+    fact "about 1000s" do
+      1000 |> a_thousand()   # true
+      1200 |> ! a_thousand() # true
+    end
+
+    defchecker always_fails(a) do
+      raise Amrita.FactError, custom_message: "Don't feel bad, this always happens"
+      false
+    end
+
+    defchecker always_succeeds(_a) do
+      true
+    end
+
+    fact "doesn't include incomprehensible function message"
+    fact "should be able to return tuple with error message" do
+      true |> always_fails()
     end
   end
 
