@@ -36,44 +36,4 @@ defmodule Integration.CheckerFacts do
      end
     end
   end
-
-  facts "readable failure messages", m do
-    defchecker a_thousand(actual) do
-      rem(actual, 1000) |> equals 0
-    end
-
-    fact "about 1000s" do
-      1000 |> a_thousand()   # true
-      1200 |> ! a_thousand() # true
-    end
-
-    defchecker always_fails(a) do
-      raise Amrita.FactError, custom_message: "Don't feel bad, this always happens"
-      false
-    end
-
-    defchecker always_succeeds(_a) do
-      true
-    end
-
-    fact "doesn't include incomprehensible function message"
-    fact "should be able to return tuple with error message" do
-      true |> always_fails()
-    end
-  end
-
-  # facts "about checkers with many expected arguments" do
-  #   defchecker sumed_up(actual, expected, x, y, z) do
-  #     actual |> equals expected + x + y + z
-  #   end
-  #
-  #   fact "supports ! and postive form" do
-  #     Integration.CheckerFacts.sumed_up(190, 100, 20, 30, 40)
-  #
-  #     fail do
-  #       100 |> sumed_up 100, 20, 30, 40
-  #     end
-  #   end
-  # end
-
 end
